@@ -1,0 +1,262 @@
+type: collection.insomnia.rest/5.0
+name: LatinAD_Challenge
+meta:
+  id: wrk_573ebbe22813453ab815b0137da7d760
+  created: 1749674547317
+  modified: 1749689671871
+collection:
+  - url: "{{API_HOST}}/api/login"
+    name: Login
+    meta:
+      id: req_cd8ec5d1db444600a3f9b6d3a16501a9
+      created: 1749674547359
+      modified: 1749685538546
+      isPrivate: false
+      sortKey: -1749674547359
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"email": "user2@latinad.vm",
+        	"password": "1234"
+        }
+    headers:
+      - id: pair_48b83249475449f699e21bf9cd49a897
+        name: Content-Type
+        value: application/json
+        disabled: false
+    scripts:
+      afterResponse: >-
+        
+        const responseBodyObj = insomnia.response.json();
+
+
+        if (responseBodyObj.access_token) {
+          insomnia.environment.set('BEARER_TOKEN', responseBodyObj.access_token);
+        }
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{API_HOST}}/api/displays?name=&page=1&perPage=10&type=indoor"
+    name: Get Displays
+    meta:
+      id: req_2587b79603c3403bb70dc58cc2ba098f
+      created: 1749674687940
+      modified: 1749684550321
+      isPrivate: false
+      sortKey: -1749674687940
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/11.1.0
+        id: pair_9929ea2e971a4e34878739f6487a90fb
+      - id: pair_79f2dbec6a234c928e974d519e34bf3d
+        name: Authorization
+        value: Bearer {{ _.BEARER_TOKEN }}
+        disabled: false
+      - id: pair_1ba95273df3a4ba694b154ca323e3784
+        name: Content-Type
+        value: application/json
+        disabled: false
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{API_HOST}}/api/displays/3"
+    name: Get Display Details
+    meta:
+      id: req_0d296fc213e745f8b41911441d9d3e4d
+      created: 1749674708178
+      modified: 1749686878479
+      isPrivate: false
+      sortKey: -1749674708178
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/11.1.0
+        id: pair_f806bcdc18154e67b8f5aed164f38f16
+      - id: pair_30e71d691b9b4c83908dcddcf66837d7
+        name: Authorization
+        value: Bearer {{ _.BEARER_TOKEN }}
+        disabled: false
+      - id: pair_f0d680f01bdf4880840949a0ae618418
+        name: Accept
+        value: application/json
+        disabled: false
+      - id: pair_f92c11d777f24a8da44844fe4b85c4d1
+        name: Content-Type
+        value: application/json
+        disabled: false
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{API_HOST}}/api/displays"
+    name: Create Display
+    meta:
+      id: req_7075fdf71f3a4bd08aaa513bd2171c92
+      created: 1749674729674
+      modified: 1749685733229
+      isPrivate: false
+      sortKey: -1749674729674
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "name": "nombre2",
+          "description": "descripción2",
+          "price_per_day": 1234.56,
+          "resolution_height": 10,
+          "resolution_width": 20,
+          "type": "indoor"
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/11.1.0
+        id: pair_029a5ad0cec3470e85fdcfc9d9333b8d
+      - id: pair_a0373f932a3744efa25a7938b4615f9c
+        name: Authorization
+        value: Bearer {{ _.BEARER_TOKEN }}
+        disabled: false
+      - id: pair_8da4839bdcd14418ad3c01f9da536ae2
+        name: Accept
+        value: application/json
+        disabled: false
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{API_HOST}}/api/displays/3"
+    name: Update Display
+    meta:
+      id: req_a71094c49772441c93b453111322eb81
+      created: 1749685229862
+      modified: 1749688598098
+      isPrivate: false
+      sortKey: -1749685229862
+    method: PUT
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "name": "nombre",
+          "description": "descripción",
+          "price_per_day": 1234.56,
+          "resolution_height": 10,
+          "resolution_width": 20,
+          "type": "outdoor"
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_e241da556f044833bc6995621293960a
+      - name: User-Agent
+        value: insomnia/11.1.0
+        id: pair_f6f41117e43048e1a1031639bd742341
+      - id: pair_ce2a72a310164c569ac034b5721c1c24
+        name: Accept
+        value: application/json
+        disabled: false
+      - id: pair_f86a18cc4a914476bb56cd33bef6c513
+        name: Authorization
+        value: Bearer {{ _.BEARER_TOKEN }}
+        disabled: false
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{API_HOST}}/api/displays/3"
+    name: Destroy Display
+    meta:
+      id: req_3d560bb696544fba9c6b2be3215877eb
+      created: 1749685543411
+      modified: 1749688621749
+      isPrivate: false
+      sortKey: -1749685543411
+    method: DELETE
+    headers:
+      - name: User-Agent
+        value: insomnia/11.1.0
+        id: pair_dd9bdc998d164ea98a54d65cfc0e7477
+      - id: pair_dbf43a77c823441891f3acc0a4909263
+        name: Authorization
+        value: Bearer {{ _.BEARER_TOKEN }}
+        disabled: false
+      - id: pair_83b6f6b114e04f279dccfe1b5c956900
+        name: Accept
+        value: application/json
+        disabled: false
+      - id: pair_1376b73fd0f94204a5ccbda4e98be2ce
+        name: Content-Type
+        value: application/json
+        disabled: false
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_4014ef624341320ea717aae4c49845994e4fb946
+    created: 1749674547319
+    modified: 1749685539657
+  cookies:
+    - id: d6be0a6a-a80d-4b3c-a889-c85a89e5c842
+      key: XSRF-TOKEN
+      value: eyJpdiI6ImY5Nm1DQytVZ2o5TGx6ZEg3SnpKdHc9PSIsInZhbHVlIjoid3J3WkM0K0EyMjlQOXEvOXZ3UHpFeE9WbnQzNmhsRDkyeXl3Mm1Oa0U5TWl5eGJ5V05CcHFFUm13TXdaU2Q5U3UzYWd2S2VHVlR6TFVwOGI5NEVQRkJWZXFBUkpvRXNCNk5XTEdWUlVITzNNbmZvM3I3R2NwQXlzWjVqQVhMVGoiLCJtYWMiOiIxNjFiMWY5YjNjMGIyYjQ3NDllNDdjODhkNTNjNTgyOTk3ZTJkOTBlN2Y3N2Y1MzFmZWY3YjI2ZDJkM2U1MGM3IiwidGFnIjoiIn0%3D
+      domain: latinad.vm
+      path: /
+      secure: false
+      httpOnly: false
+      creation: 2025-06-11T21:18:18.030Z
+      hostOnly: true
+      lastAccessed: 2025-06-11T23:05:15.646Z
+    - id: 3fdd822d-6fcb-4ace-91b2-95f9ab854bb3
+      key: laravel_session
+      value: eyJpdiI6IjFMMXpaR3JFb0dPaVlwTXZ0Rkl6M2c9PSIsInZhbHVlIjoiYVZUZWtQVERZK3drV0I4THo5YUZQa3RxendQcmowd3MyTVE4QlF1ckQwMDYzRm5FMFNNNDI3cXM3d1NQTGF6TTIvM0VaK2JFVHVCeDErYmkzUkVXY29uUUF5YU84SS9GYS96S3lUdmkrQ1NtZ0ozVjFtZVpKNjdrY05CTXVWWC8iLCJtYWMiOiIzYzg3YzM0NmUyOTcwYjZjNThjYTI2Y2MyNTFmMDU0YWE2MWFiMzY3YTU2YjExYmE0NWJmNmQ2Mzc3ZWU3YmQ2IiwidGFnIjoiIn0%3D
+      domain: latinad.vm
+      path: /
+      secure: false
+      httpOnly: true
+      creation: 2025-06-11T21:18:18.031Z
+      hostOnly: true
+      lastAccessed: 2025-06-11T23:05:15.646Z
+environments:
+  name: Base Environment
+  meta:
+    id: env_4014ef624341320ea717aae4c49845994e4fb946
+    created: 1749674547318
+    modified: 1749685539658
+    isPrivate: false
+  data:
+    API_HOST: http://latinad.vm
+    BEARER_TOKEN: 20|VZyi0WRhRsJ5G7C7050iHZ2X2X4AzYHN88EMml3yd0c40184

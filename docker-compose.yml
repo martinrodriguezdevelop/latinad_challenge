@@ -1,0 +1,45 @@
+version: "3"
+services:
+    dev-latinad:
+        platform: linux/amd64
+        build:
+            context: ./tools/docker/runtimes/8.1
+            args:
+                WWWGROUP: "${WWWGROUP}"
+        container_name: latinad
+        hostname: latinad.vm
+        external_links:
+            - mysql-local:mysql
+        extra_hosts:
+            - "host.docker.internal:host-gateway"
+        environment:
+            VIRTUAL_HOST: latinad.vm
+            WWWUSER: "${WWWUSER}"
+            WWWGROUP: "${WWWGROUP}"
+
+        volumes:
+            - ./tools/docker/bash_aliases:/home/developer/.bash_aliases
+            - .:/var/www
+        networks:
+            default:
+                aliases:
+                    - latinad.vm
+        ports:
+            - "80:80"
+    mysql-local:
+        platform: linux/amd64
+        image: mysql:5.7
+        container_name: database01
+        command: --init-file=/tools/init.sql
+        hostname: mariadb01
+        environment:
+            MYSQL_USER: root
+            MYSQL_ROOT_PASSWORD: root
+        volumes:
+            - "./data:/var/lib/mysql"
+            - "./tools:/tools"
+        ports:
+            - 3306:3306
+networks:
+    default:
+        driver: bridge

@@ -1,0 +1,47 @@
+<project name="LatinADChallenge" default="dist">
+    <target name="phpcs" depends='phpcbf, phpcbftests, phpcstests'>
+        <echo msg="Running phpcs 🚥" />
+        <exec logoutput="true" command="./vendor/bin/phpcs --standard=./tools/ruleset.xml app"/>
+    </target>
+    <target name="phpcbf">
+        <echo msg="Running phpcbf" />
+        <exec logoutput="true" command="./vendor/bin/phpcbf --standard=./tools/ruleset.xml app"/>
+    </target>
+    <target name="phpcstests" depends='phpcbftests'>
+        <echo msg="Running phpcs" />
+        <exec logoutput="true" command="./vendor/bin/phpcs --standard=./tools/ruleset.xml tests"/>
+    </target>
+    <target name="phpcbftests">
+        <echo msg="Running phpcbf" />
+        <exec logoutput="true" command="./vendor/bin/phpcbf --standard=./tools/ruleset.xml tests"/>
+    </target>
+    <target name="phpmd-strict">
+        <echo msg="Running phpmd"/>
+        <exec logoutput="true" command="./vendor/bin/phpmd app text tools/phpmd_rulest.xml --strict"/>
+    </target>
+    <target name="phpmd">
+        <echo msg="Running phpmd"/>
+        <exec logoutput="true" command="./vendor/bin/phpmd app text ./tools/phpmd_rulest.xml"/>
+    </target>
+    <target name='phpunit-coverage'>
+        <echo msg="Running phpunit coverage"/>
+        <exec logoutput="true" command="./vendor/bin/phpunit --strict-coverage --coverage-html coverage.html"/>
+    </target>
+    <target name='phpunit'>
+        <echo msg="Running phpunit"/>
+        <exec logoutput="true" command="./vendor/bin/phpunit"/>
+    </target>
+    <target name='phpstan'>
+        <echo msg="Running phpstan"/>
+        <exec logoutput="true" command="php -d memory_limit=4G ./vendor/bin/phpstan analyse -c ./tools/phpstan.neon"/>
+    </target>
+    <target name='composer-install'>
+        <echo msg="Composer Install"/>
+        <exec logoutput="true" command="composer install"/>
+    </target>
+    <target name='copy-hook'>
+        <exec logoutput="true" command="cp tools/pre-commit .git/hooks/pre-commit"/>
+    </target>
+    <!-- <target name='predeploy' depends="phpcs, phpmd, phpstan, phpunit, copy-hook" /> -->
+    <target name='predeploy' depends="phpcs, phpmd, copy-hook" />
+</project>
