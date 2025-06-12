@@ -1,0 +1,66 @@
+service: latinad
+
+provider:
+    name: aws
+    # The AWS region in which to deploy (us-east-1 is the default)
+    region: us-east-1
+    stage: ${opt:stage, 'dev'}
+    # Environment variables
+    environment:
+        APP_ENV: ${ssm:/latinad/${self:provider.stage}/app_env}
+        APP_NAME: latinad
+        APP_DEBUG: ${ssm:/latinad/${self:provider.stage}/app_debug}
+        APP_KEY: ${ssm:/latinad/${self:provider.stage}/app_key}
+        DB_CONNECTION: ${ssm:/latinad/${self:provider.stage}/db_connection}
+        DB_HOST: ${ssm:/latinad/${self:provider.stage}/db_host}
+        DB_PORT: ${ssm:/latinad/${self:provider.stage}/db_port}
+        DB_DATABASE: latinad
+        DB_USERNAME: ${ssm:/latinad/${self:provider.stage}/db_username}
+        DB_PASSWORD: ${ssm:/latinad/${self:provider.stage}/db_password}
+        BREF_BINARY_RESPONSES: '1'
+        SESSION_DRIVER: database
+        SESSION_SECURE_COOKIE: true
+        SESSION_DOMAIN: .latinad.com
+        SESSION_COOKIE: latinad_VISITOR_ID
+
+package:
+    # Files and directories to exclude from deployment
+    patterns:
+        - '!node_modules/**'
+        - '!public/storage'
+        - '!resources/assets/**'
+        - '!resources/css/**'
+        - '!resources/images/**'
+        - '!resources/js/**'
+        - '!storage/**'
+        - '!tests/**'
+        - '!database/*.sqlite'
+        # Exclude assets except for the manifest file
+        - '!public/build/**'
+        - 'public/build/manifest.json'
+
+functions:
+
+    # This function runs the Laravel website/API
+    web:
+        handler: public/index.php
+        runtime: php-82-fpm
+        timeout: 28 # in seconds (API Gateway has a timeout of 29 seconds)
+        events:
+            - httpApi: '*'
+
+    # This function lets us run artisan commands in Lambda
+    artisan:
+        handler: artisan
+        runtime: php-82-console
+        timeout: 720 # in seconds
+        # Uncomment to also run the scheduler every minute
+        #events:
+        #    - schedule:
+        #          rate: rate(1 minute)
+        #          input: '"schedule:run"'
+
+plugins:
+    # We need to include the Bref plugin
+    - ./vendor/bref/bref
+    - ./vendor/bref/extra-php-extensions
