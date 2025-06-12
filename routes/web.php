@@ -2,17 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+use Illuminate\Support\Facades\Response;
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/api-docs.json', function () {
+    $path = storage_path('api-docs/api-docs.json');
+    if (!file_exists($path)) {
+        abort(404, 'API docs not found');
+    }
+    return Response::file($path, ['Content-Type' => 'application/json']);
 });

@@ -48,6 +48,10 @@ functions:
         timeout: 28 # in seconds (API Gateway has a timeout of 29 seconds)
         events:
             - httpApi: '*'
+            - httpApi:
+                path: /api-docs.json
+                method: get
+
 
     # This function lets us run artisan commands in Lambda
     artisan:

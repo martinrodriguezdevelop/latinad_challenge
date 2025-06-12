@@ -63,7 +63,8 @@ Agrega la siguiente línea en tu archivo de hosts para que el dominio latinad.vm
 
 La colección de POSTMAN se encuentra adjunta en el root con el nombre de archivo 
 ```
-Insomnia_2025-06-11.yaml
+Insomnia_2025-06-11.yaml (LOCAL)
+Insomnia_PROD_2025-06-12.yaml (PRODUCCION)
 ```
 
 ## Ejecución de Pruebas
@@ -76,10 +77,11 @@ php artisan test
 
 # Documentación del API
 
-La documentación completa del API se encuentra generada utilizando Swagger UI. Puedes acceder a la documentación en formato interactivo visitando la siguiente URL:
+La documentación completa del API se encuentra generada utilizando Swagger UI. Puedes acceder a la documentación en formato interactivo visitando las siguientes URLs:
 
 ```
 http://latinad.vm/api/documentation (LOCAL)
+https://8to7apvmqj.execute-api.us-east-1.amazonaws.com/api/documentation (PRODUCCION)
 ```
 
 ## Ejecutar PHPCS
