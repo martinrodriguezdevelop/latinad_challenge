@@ -68,3 +68,9 @@ plugins:
     # We need to include the Bref plugin
     - ./vendor/bref/bref
     - ./vendor/bref/extra-php-extensions
+
+constructs:
+    website:
+        type: server-side-website
+        assets:
+            '/api-docs/*': public/api-docs
