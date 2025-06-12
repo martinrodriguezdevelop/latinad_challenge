@@ -10,14 +10,27 @@
 
 ## Configuración
 
-1. Duplica el archivo `.env.example` y renómbralo como `.env`:
+1. Clona el repositorio
+```
+git clone git@github.com:martinrodriguezdevelop/latinad_challenge.git
+cd latinad_challenge
+
+```
+
+2. Duplica el archivo `.env.example` y renómbralo como `.env`:
 
 ```
 cp .env.example .env
 ```
 
-2. Asegúrate de tener Docker Desktop instalado en tu máquina. ([Descargar Docker Desktop](https://www.docker.com/products/docker-desktop))
-3. Construye y ejecuta los contenedores de Docker utilizando `docker-compose`:
+3. Asegúrate de tener Docker Desktop instalado en tu máquina. ([Descargar Docker Desktop](https://www.docker.com/products/docker-desktop))
+
+4. Crea la carpeta 'data' en el root
+```
+mkdir data
+```
+
+5. Construye y ejecuta los contenedores de Docker utilizando `docker-compose`:
 
 ```
 docker-compose build
